@@ -17,4 +17,5 @@ PHPとMySQLを使用して作成した、データの投稿・保存・一覧表
 同梱の `php_lesson.sql` をインポートして使用します。
 
 ## 動作イメージ
-(ここに、先ほど撮ったスクリーンショット画像をドラッグ＆ドロップするとURLが自動生成されます)
+
+<img width="590" height="711" alt="スクリーンショット 2025-12-08 120059" src="https://github.com/user-attachments/assets/b843f562-7680-41d8-ba85-aa60fadc8c71" />
