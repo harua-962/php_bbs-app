@@ -1,6 +1,6 @@
 FROM php:8.2-cli
 
-# 必要な拡張機能とツールのインストール
+# 必要なパッケージとPHP拡張をインストール
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -13,11 +13,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY . .
 
-# 依存関係のインストールと初期設定
+# 依存関係のインストール（Composerのみ実行）
 RUN composer install --no-dev --optimize-autoloader
-RUN touch database/database.sqlite
-RUN php artisan key:generate --force
-RUN php artisan migrate --force
 
-# 起動コマンド
-CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
+# 起動スクリプト：起動時にDB作成・マイグレーション・サーバー起動を行う
+CMD touch database/database.sqlite && \
+    php artisan key:generate --force && \
+    php artisan migrate --force && \
+    php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
