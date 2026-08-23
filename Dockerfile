@@ -13,11 +13,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY . .
 
-# 依存関係のインストール（Composerのみ実行）
+# 依存関係のインストール
 RUN composer install --no-dev --optimize-autoloader
 
-# 起動スクリプト：起動時にDB作成・マイグレーション・サーバー起動を行う
-CMD touch database/database.sqlite && \
+# .env作成・キー生成・DB準備・マイグレーション・起動
+CMD cp -n .env.example .env && \
+    touch database/database.sqlite && \
     php artisan key:generate --force && \
     php artisan migrate --force && \
     php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
